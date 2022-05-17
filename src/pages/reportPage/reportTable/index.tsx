@@ -16,6 +16,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import groupByMultiAndSum from "./utils";
 
 const ReportTable = () => {
+  const [loading, setLoading] = useState(false);
   const [dataSource, setDataSource] = useState<DataSource[]>([]);
   const [grouped, setGrouped] = useState<{
     keys: Column[];
@@ -31,6 +32,7 @@ const ReportTable = () => {
   const columns = useColumns(grouped.keys, totalDataAvgPrice);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get("/api/properties")
       .then((res) => {
@@ -39,6 +41,9 @@ const ReportTable = () => {
       .catch((err) => {
         setDataSource([]);
         console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -152,6 +157,7 @@ const ReportTable = () => {
         </Col>
         <Col xs={24}>
           <Table
+            loading={loading}
             rowKey="id"
             columns={columns}
             dataSource={renderDataSource()}
