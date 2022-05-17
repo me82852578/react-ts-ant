@@ -135,5 +135,3 @@ export const useColumns = (groups?: Column[], totalAvgPrice: number = 0) => {
     );
   }
 };
-
-export const groupedColumns = () => {};

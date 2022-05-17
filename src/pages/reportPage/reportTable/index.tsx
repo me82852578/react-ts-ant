@@ -13,41 +13,7 @@ import {
 import { useColumns } from "./columns";
 import { Column, DataSource, GroupedDataSource } from "./types";
 import { CloseOutlined } from "@ant-design/icons";
-
-const groupByMultiAndSum = (
-  dataSource: Record<string | number, any>[],
-  groups: string[] = ["state", "city", "type"]
-): Record<string | number, string | number>[] | GroupedDataSource => {
-  const grouped = dataSource.reduce<any>((acc, curr) => {
-    let groupedResult: string[] = [];
-    groups.forEach((g) => {
-      groupedResult.push(curr[g]);
-    });
-    const groupedKey = groupedResult.join();
-
-    if (!acc[groupedKey]) {
-      return {
-        ...acc,
-        [groupedKey]: { ...curr, avgPrice: curr.price, houses: 1 },
-      };
-    } else {
-      return {
-        ...acc,
-        [groupedKey]: {
-          ...acc[groupedKey],
-          price: acc[groupedKey].price + curr.price,
-          avgPrice: (
-            (acc[groupedKey].price + curr.price) /
-            (acc[groupedKey].houses + 1)
-          ).toFixed(2),
-          houses: acc[groupedKey].houses + 1,
-        },
-      };
-    }
-  }, {});
-
-  return grouped;
-};
+import groupByMultiAndSum from "./utils";
 
 const ReportTable = () => {
   const [dataSource, setDataSource] = useState<DataSource[]>([]);
@@ -122,80 +88,84 @@ const ReportTable = () => {
   };
 
   return (
-    <Row
-      gutter={[16, 16]}
-      style={{ display: "flex", padding: "1rem", overflow: "auto" }}
+    <div
+      style={{
+        width: "100%",
+        overflow: "hidden",
+      }}
     >
-      <Col xs={24}>
-        <Typography.Text>Group by:　</Typography.Text>
-        <Cascader
-          style={{ width: "300px" }}
-          options={cascaderOptions.map((c) => ({
-            label: c.label,
-            value: c.value,
-          }))}
-          onChange={handleGroupByOnChange}
-          placeholder="Group by ..."
-          multiple
-          // maxTagCount="responsive"
-        />
-      </Col>
-      <Col xs={24}>
-        <div style={{ display: "flex", flexDirection: "column" }}>
-          <Space>
-            <Typography.Text>Price range:</Typography.Text>
-            <InputNumber
-              value={priceRange[0]}
-              formatter={(value) =>
-                `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              }
-              parser={(value: any) => value?.replace(/\$\s?|(,*)/g, "")}
-              onChange={(value) => handlePriceRangeOnChange(value, 0)}
-              min={0}
-            />
-            –
-            <InputNumber
-              value={priceRange[1]}
-              formatter={(value) =>
-                `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              }
-              parser={(value: any) => value?.replace(/\$\s?|(,*)/g, "")}
-              onChange={(value) => handlePriceRangeOnChange(value, 1)}
-              min={0}
-            />
-            <Button
-              shape="circle"
-              size="small"
-              icon={<CloseOutlined />}
-              onClick={handlePriceRange}
-            />
-          </Space>
-          <Typography.Text type="secondary">
-            (Tip: If already grouped, the "price range" is the range of the
-            "average price". )
+      <Row gutter={[16, 16]}>
+        <Col xs={24}>
+          <Typography.Text>Group by:　</Typography.Text>
+          <Cascader
+            style={{ width: "300px" }}
+            options={cascaderOptions.map((c) => ({
+              label: c.label,
+              value: c.value,
+            }))}
+            onChange={handleGroupByOnChange}
+            placeholder="Group by ..."
+            multiple
+            // maxTagCount="responsive"
+          />
+        </Col>
+        <Col xs={24}>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Space>
+              <Typography.Text>Price range:</Typography.Text>
+              <InputNumber
+                value={priceRange[0]}
+                formatter={(value) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                parser={(value: any) => value?.replace(/\$\s?|(,*)/g, "")}
+                onChange={(value) => handlePriceRangeOnChange(value, 0)}
+                min={0}
+              />
+              –
+              <InputNumber
+                value={priceRange[1]}
+                formatter={(value) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                parser={(value: any) => value?.replace(/\$\s?|(,*)/g, "")}
+                onChange={(value) => handlePriceRangeOnChange(value, 1)}
+                min={0}
+              />
+              <Button
+                shape="circle"
+                size="small"
+                icon={<CloseOutlined />}
+                onClick={handlePriceRange}
+              />
+            </Space>
+            <Typography.Text type="secondary">
+              (Tip: If already grouped, the "price range" is the range of the
+              "average price". )
+            </Typography.Text>
+          </div>
+        </Col>
+        <Col xs={24}>
+          <Typography.Text>
+            The average total price is <strong>${totalDataAvgPrice}</strong> .
           </Typography.Text>
-        </div>
-      </Col>
-      <Col xs={24}>
-        <Typography.Text>
-          The average total price is <strong>${totalDataAvgPrice}</strong> .
-        </Typography.Text>
-      </Col>
-      <Col xs={24}>
-        <Table
-          rowKey="id"
-          columns={columns}
-          dataSource={renderDataSource()}
-          scroll={{ x: "max-content" }}
-          pagination={{
-            size: "small",
-            pageSize: 10,
-            showQuickJumper: true,
-            showTotal: (total, range) => `${range[1]}/${total}`,
-          }}
-        />
-      </Col>
-    </Row>
+        </Col>
+        <Col xs={24}>
+          <Table
+            rowKey="id"
+            columns={columns}
+            dataSource={renderDataSource()}
+            scroll={{ x: "max-content" }}
+            pagination={{
+              size: "small",
+              pageSize: 10,
+              showQuickJumper: true,
+              showTotal: (total, range) => `${range[1]}/${total}`,
+            }}
+          />
+        </Col>
+      </Row>
+    </div>
   );
 };
 
