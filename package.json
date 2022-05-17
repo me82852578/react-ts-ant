@@ -1,6 +1,7 @@
 {
   "name": "react-ts-ant",
   "version": "0.1.0",
+  "homepage": "https://www.jayweb.online/react-ts-ant-demo",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
