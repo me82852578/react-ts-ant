@@ -1,3 +1,9 @@
+# Quick start
+
+1. Clone repo.
+2. `yarn install`
+3. `yarn start`
+
 # Part 1
 
 ## Purpose
@@ -64,7 +70,6 @@ Example of response:
     // ...
   ]
 }
-
 ```
 
 ### PART 1: Basic Requirements
@@ -94,11 +99,10 @@ Example of response:
 
 Example
 
-| State    | City     | Houses   | Avg. Price |
-| :------: | :------: | :------: | :--------: |
-| Georgia  | Atlanta  | 13       | 630        |
-| Georgia  | Columbus | 5        | 800        |
-
+|  State  |   City   | Houses | Avg. Price |
+| :-----: | :------: | :----: | :--------: |
+| Georgia | Atlanta  |   13   |    630     |
+| Georgia | Columbus |   5    |    800     |
 
 # Part 2
 
@@ -139,13 +143,13 @@ You can choose any of the following requmirements to get extra credits. Try to e
   - price range: For example, `500-599`, `600-699`, ..., `1400-1499` are the ranges.
 - Dynamic fields to group by
   - In part 1, we hard code the fields to group by state and city. Make it dynamic and let user add fields they want to see the analysis. For example, the user can group data by fields `state` ,`city` and `type`, and result will show
-    | State    | City     | Type          | Houses  | Avg. Price |
+    | State | City | Type | Houses | Avg. Price |
     | :------: | :------: | :-----------: | :-----: | :--------: |
-    | Georgia  | Atlanta  | Apartment     | 4       | 550        |
-    | Georgia  | Atlanta  | Single-family | 2       | 630        |
-    | Georgia  | Atlanta  | Townhomes     | 3       | 560        |
-    | Georgia  | Atlanta  | Condo         | 1       | 560        |
-    | Georgia  | Columbus | Apartment     | ...     | ...        |
+    | Georgia | Atlanta | Apartment | 4 | 550 |
+    | Georgia | Atlanta | Single-family | 2 | 630 |
+    | Georgia | Atlanta | Townhomes | 3 | 560 |
+    | Georgia | Atlanta | Condo | 1 | 560 |
+    | Georgia | Columbus | Apartment | ... | ... |
 - Can group by price range
   - Provide a price range to group by. For example, `500-599`, `600-699`, ..., `1400-1499` are the ranges.
 - Can show color for the price compared to the average price
