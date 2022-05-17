@@ -1,4 +1,4 @@
-# Onramp Lab Frontend Test - Part 1
+# Part 1
 
 ## Purpose
 
@@ -100,7 +100,7 @@ Example
 | Georgia  | Columbus | 5        | 800        |
 
 
-# Frontend Test - Part 2
+# Part 2
 
 ## Purpose
 
