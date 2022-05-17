@@ -1,12 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "antd/dist/antd.min.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import fakeServer from "./service";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
+
+if (process.env.NODE_ENV === "development") {
+  fakeServer();
+}
+
 root.render(
   <React.StrictMode>
     <App />
