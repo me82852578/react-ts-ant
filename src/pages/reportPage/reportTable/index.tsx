@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Cascader, InputNumber, Space, Table, Typography } from "antd";
+import {
+  Button,
+  Cascader,
+  Col,
+  InputNumber,
+  Row,
+  Space,
+  Table,
+  Typography,
+} from "antd";
 import { useColumns } from "./columns";
 import { Column, DataSource, GroupedDataSource } from "./types";
 import { CloseOutlined } from "@ant-design/icons";
@@ -113,11 +122,14 @@ const ReportTable = () => {
   };
 
   return (
-    <Space direction="vertical" style={{ display: "flex", padding: "1rem" }}>
-      <div>
+    <Row
+      gutter={[16, 16]}
+      style={{ display: "flex", padding: "1rem", overflow: "auto" }}
+    >
+      <Col xs={24}>
         <Typography.Text>Group by:　</Typography.Text>
         <Cascader
-          style={{ width: "400px" }}
+          style={{ width: "300px" }}
           options={cascaderOptions.map((c) => ({
             label: c.label,
             value: c.value,
@@ -127,54 +139,63 @@ const ReportTable = () => {
           multiple
           // maxTagCount="responsive"
         />
-      </div>
-      <Space>
-        <Typography.Text>Price range:</Typography.Text>
-        <InputNumber
-          value={priceRange[0]}
-          formatter={(value) =>
-            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-          }
-          parser={(value: any) => value?.replace(/\$\s?|(,*)/g, "")}
-          onChange={(value) => handlePriceRangeOnChange(value, 0)}
-          min={0}
-        />
-        –
-        <InputNumber
-          value={priceRange[1]}
-          formatter={(value) =>
-            `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-          }
-          parser={(value: any) => value?.replace(/\$\s?|(,*)/g, "")}
-          onChange={(value) => handlePriceRangeOnChange(value, 1)}
-          min={0}
-        />
-        <Button
-          shape="circle"
-          size="small"
-          icon={<CloseOutlined />}
-          onClick={handlePriceRange}
-        />
-        <Typography.Text type="secondary">
-          (Tip: If already grouped, the "price range" is the range of the
-          "average price". )
+      </Col>
+      <Col xs={24}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <Space>
+            <Typography.Text>Price range:</Typography.Text>
+            <InputNumber
+              value={priceRange[0]}
+              formatter={(value) =>
+                `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              }
+              parser={(value: any) => value?.replace(/\$\s?|(,*)/g, "")}
+              onChange={(value) => handlePriceRangeOnChange(value, 0)}
+              min={0}
+            />
+            –
+            <InputNumber
+              value={priceRange[1]}
+              formatter={(value) =>
+                `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              }
+              parser={(value: any) => value?.replace(/\$\s?|(,*)/g, "")}
+              onChange={(value) => handlePriceRangeOnChange(value, 1)}
+              min={0}
+            />
+            <Button
+              shape="circle"
+              size="small"
+              icon={<CloseOutlined />}
+              onClick={handlePriceRange}
+            />
+          </Space>
+          <Typography.Text type="secondary">
+            (Tip: If already grouped, the "price range" is the range of the
+            "average price". )
+          </Typography.Text>
+        </div>
+      </Col>
+      <Col xs={24}>
+        <Typography.Text>
+          The average total price is <strong>${totalDataAvgPrice}</strong> .
         </Typography.Text>
-      </Space>
-      <Typography.Text>
-        The average total price is <strong>${totalDataAvgPrice}</strong> .
-      </Typography.Text>
-      <Table
-        rowKey="id"
-        columns={columns}
-        dataSource={renderDataSource()}
-        pagination={{
-          size: "small",
-          pageSize: 10,
-          showQuickJumper: true,
-          showTotal: (total, range) => `${range[1]}/${total}`,
-        }}
-      />
-    </Space>
+      </Col>
+      <Col xs={24}>
+        <Table
+          rowKey="id"
+          columns={columns}
+          dataSource={renderDataSource()}
+          scroll={{ x: "max-content" }}
+          pagination={{
+            size: "small",
+            pageSize: 10,
+            showQuickJumper: true,
+            showTotal: (total, range) => `${range[1]}/${total}`,
+          }}
+        />
+      </Col>
+    </Row>
   );
 };
 
