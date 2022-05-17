@@ -9,9 +9,7 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-if (process.env.NODE_ENV === "development") {
-  fakeServer();
-}
+fakeServer();
 
 root.render(
   <React.StrictMode>
