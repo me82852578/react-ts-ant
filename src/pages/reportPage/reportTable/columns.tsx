@@ -1,4 +1,4 @@
-import React, { Key, ReactNode, useRef } from "react";
+import React, { ReactNode, useRef } from "react";
 import { Input, InputRef } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import {
@@ -10,11 +10,7 @@ import PriceCell from "./priceCell";
 
 export const useColumns = (groups?: Column[], totalAvgPrice: number = 0) => {
   const filterInputRef = useRef<InputRef>(null);
-  const handleSearch = (
-    selectedKeys: Key[],
-    confirm: (param?: FilterConfirmProps) => void,
-    dataIndex: string
-  ) => {
+  const handleSearch = (confirm: (param?: FilterConfirmProps) => void) => {
     confirm();
   };
 
@@ -42,13 +38,13 @@ export const useColumns = (groups?: Column[], totalAvgPrice: number = 0) => {
               }
               confirm({ closeDropdown: false });
             } else {
-              handleSearch(selectedKeys, confirm, dataIndex);
+              handleSearch(confirm);
             }
           }}
           onChange={(e) => {
             setSelectedKeys([e.target.value]);
           }}
-          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          onPressEnter={() => handleSearch(confirm)}
           style={{ marginBottom: 8, display: "block" }}
         />
       </div>

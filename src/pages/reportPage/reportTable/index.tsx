@@ -69,7 +69,7 @@ const ReportTable = () => {
     });
   }
 
-  const handlePriceRange = () => {
+  const handlePriceRangeOnReset = () => {
     setPriceRange([NaN, NaN]);
   };
 
@@ -141,7 +141,7 @@ const ReportTable = () => {
                 shape="circle"
                 size="small"
                 icon={<CloseOutlined />}
-                onClick={handlePriceRange}
+                onClick={handlePriceRangeOnReset}
               />
             </Space>
             <Typography.Text type="secondary">
